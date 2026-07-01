@@ -1,10 +1,44 @@
+const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+/** Parse YYYY-MM-DD as local noon to avoid DST / UTC day-shift bugs. */
+export function parseISODate(dateStr: string): Date {
+  return new Date(dateStr + 'T12:00:00');
+}
+
+/** Format a Date as YYYY-MM-DD in the device's local time zone. */
+export function dateToISO(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 export function todayISO(): string {
-  return new Date().toISOString().slice(0, 10);
+  return dateToISO(new Date());
+}
+
+export function daysAgoISO(days: number): string {
+  const d = new Date();
+  d.setDate(d.getDate() - days);
+  return dateToISO(d);
+}
+
+export function eachDateInRange(startIso: string, endIso: string): string[] {
+  const dates: string[] = [];
+  const cursor = parseISODate(startIso);
+  const end = parseISODate(endIso);
+
+  while (cursor <= end) {
+    dates.push(dateToISO(cursor));
+    cursor.setDate(cursor.getDate() + 1);
+  }
+
+  return dates;
 }
 
 export function formatDisplayDate(dateStr: string): string {
-  const date = new Date(dateStr + 'T12:00:00');
-  return date.toLocaleDateString('en-US', {
+  const date = parseISODate(dateStr);
+  return date.toLocaleDateString(undefined, {
     weekday: 'short',
     month: 'short',
     day: 'numeric',
@@ -34,24 +68,8 @@ export function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
-export function daysAgoISO(days: number): string {
-  const d = new Date();
-  d.setDate(d.getDate() - days);
-  return d.toISOString().slice(0, 10);
-}
-
-const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
-
 export function isValidISODate(dateStr: string): boolean {
   if (!ISO_DATE_RE.test(dateStr)) return false;
-  const date = new Date(dateStr + 'T12:00:00');
-  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === dateStr;
-}
-
-export function parseISODate(dateStr: string): Date {
-  return new Date(dateStr + 'T12:00:00');
-}
-
-export function dateToISO(date: Date): string {
-  return date.toISOString().slice(0, 10);
+  const date = parseISODate(dateStr);
+  return !Number.isNaN(date.getTime()) && dateToISO(date) === dateStr;
 }

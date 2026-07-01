@@ -120,7 +120,7 @@ export default function ReportsScreen() {
                 {adherence.map((item, i) => {
                   const barColor =
                     item.percent >= 80
-                      ? colors.success
+                      ? colors.secondary
                       : item.percent >= 50
                         ? colors.warning
                         : colors.danger;
@@ -163,7 +163,7 @@ export default function ReportsScreen() {
                     delta == null
                       ? colors.textSecondary
                       : delta > 0
-                        ? colors.success
+                        ? colors.secondary
                         : delta < 0
                           ? colors.danger
                           : colors.textSecondary;

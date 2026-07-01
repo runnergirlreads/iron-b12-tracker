@@ -21,7 +21,7 @@ function tierIcon(tier: SeverityTier, colors: ThemeColors): SymptomChipIcon {
     case 'low':
       return {
         name: 'checkmark-circle-outline',
-        color: colors.success,
+        color: colors.secondary,
         accessibilityText: 'low severity',
       };
     case 'medium':
@@ -51,7 +51,7 @@ export function getSymptomChipIcon(
     return entry.yesNo
       ? {
           name: 'checkmark-circle',
-          color: colors.success,
+          color: colors.secondary,
           accessibilityText: 'yes',
         }
       : {

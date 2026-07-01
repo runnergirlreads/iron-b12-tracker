@@ -20,12 +20,6 @@ const RANGES = [
   { label: '90 days', days: 90 },
 ];
 
-const FLOW_COLORS = {
-  light: '#86EFAC',
-  medium: '#FCD34D',
-  heavy: '#FCA5A5',
-};
-
 export default function SymptomTrendsScreen() {
   const { colors } = useTheme();
   const { symptoms, periods } = useHealthData();
@@ -194,7 +188,7 @@ export default function SymptomTrendsScreen() {
             <Text style={[styles.cardTitle, { color: colors.text }]}>Periods in range</Text>
             {periodRanges.map((range) => (
               <View key={range.label} style={styles.periodItem}>
-                <View style={[styles.flowDot, { backgroundColor: FLOW_COLORS[range.flow] }]} />
+                <View style={[styles.flowDot, { backgroundColor: colors.periodFlow[range.flow] }]} />
                 <Text style={{ color: colors.text, flex: 1 }}>{range.label}</Text>
                 <Text style={{ color: colors.textSecondary, textTransform: 'capitalize' }}>{range.flow}</Text>
               </View>

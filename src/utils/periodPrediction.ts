@@ -1,4 +1,6 @@
 import { PeriodEntry } from '../types';
+import { PeriodFlowColors } from '../constants/theme';
+import { dateToISO, parseISODate } from './dates';
 
 export function predictNextPeriod(periods: PeriodEntry[]): string | null {
   if (periods.length < 2) return null;
@@ -7,8 +9,8 @@ export function predictNextPeriod(periods: PeriodEntry[]): string | null {
   const cycleLengths: number[] = [];
 
   for (let i = 1; i < sorted.length; i++) {
-    const prev = new Date(sorted[i - 1].startDate + 'T12:00:00');
-    const curr = new Date(sorted[i].startDate + 'T12:00:00');
+    const prev = parseISODate(sorted[i - 1].startDate);
+    const curr = parseISODate(sorted[i].startDate);
     const days = Math.round((curr.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24));
     if (days > 0 && days < 60) cycleLengths.push(days);
   }
@@ -16,12 +18,16 @@ export function predictNextPeriod(periods: PeriodEntry[]): string | null {
   if (cycleLengths.length === 0) return null;
 
   const avgCycle = Math.round(cycleLengths.reduce((a, b) => a + b, 0) / cycleLengths.length);
-  const lastStart = new Date(sorted[sorted.length - 1].startDate + 'T12:00:00');
+  const lastStart = parseISODate(sorted[sorted.length - 1].startDate);
   lastStart.setDate(lastStart.getDate() + avgCycle);
-  return lastStart.toISOString().slice(0, 10);
+  return dateToISO(lastStart);
 }
 
-export function getPeriodDatesForCalendar(periods: PeriodEntry[]): Record<
+export function getPeriodDatesForCalendar(
+  periods: PeriodEntry[],
+  flowColors: PeriodFlowColors,
+  calendarTextColor: string,
+): Record<
   string,
   {
     customStyles: {
@@ -49,24 +55,20 @@ export function getPeriodDatesForCalendar(periods: PeriodEntry[]): Record<
       };
     }
   > = {};
-  const flowColors = {
-    light: '#86EFAC',
-    medium: '#FCD34D',
-    heavy: '#FCA5A5',
-  };
+  const flowColorMap = flowColors;
 
   for (const period of periods) {
-    const start = new Date(period.startDate + 'T12:00:00');
+    const start = parseISODate(period.startDate);
     const end = period.endDate
-      ? new Date(period.endDate + 'T12:00:00')
-      : new Date(period.startDate + 'T12:00:00');
+      ? parseISODate(period.endDate)
+      : parseISODate(period.startDate);
 
     for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-      const key = d.toISOString().slice(0, 10);
+      const key = dateToISO(d);
       marked[key] = {
         customStyles: {
-          container: { backgroundColor: flowColors[period.flow], borderRadius: 16 },
-          text: { color: '#1A1A2E', fontWeight: 'bold' },
+          container: { backgroundColor: flowColorMap[period.flow], borderRadius: 16 },
+          text: { color: calendarTextColor, fontWeight: 'bold' },
         },
       };
     }

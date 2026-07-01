@@ -46,7 +46,7 @@ export default function PeriodTrackerScreen() {
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
 
   const markedDates = useMemo(() => {
-    const marked = getPeriodDatesForCalendar(periods);
+    const marked = getPeriodDatesForCalendar(periods, colors.periodFlow, colors.text);
 
     for (const period of periods) {
       for (const date of eachDateInRange(period.startDate, getPeriodEndDate(period))) {
@@ -67,7 +67,7 @@ export default function PeriodTrackerScreen() {
     }
 
     return marked;
-  }, [periods, colors.primary]);
+  }, [periods, colors.primary, colors.periodFlow, colors.text]);
 
   const nextPeriod = useMemo(() => predictNextPeriod(periods), [periods]);
   const dayPeriod = dayPeriodId ? periods.find((p) => p.id === dayPeriodId) : undefined;
@@ -202,17 +202,14 @@ export default function PeriodTrackerScreen() {
         />
 
         <View style={styles.legend}>
-          {(['light', 'medium', 'heavy'] as FlowLevel[]).map((f) => {
-            const legendColors = { light: '#86EFAC', medium: '#FCD34D', heavy: '#FCA5A5' };
-            return (
+          {(['light', 'medium', 'heavy'] as FlowLevel[]).map((f) => (
               <View key={f} style={styles.legendItem}>
-                <View style={[styles.legendDot, { backgroundColor: legendColors[f] }]} />
+                <View style={[styles.legendDot, { backgroundColor: colors.periodFlow[f] }]} />
                 <Text style={{ color: colors.textSecondary, fontSize: 12, textTransform: 'capitalize' }}>
                   {f}
                 </Text>
               </View>
-            );
-          })}
+            ))}
           <View style={styles.legendItem}>
             <View style={[styles.legendRing, { borderColor: colors.primary }]} />
             <Text style={{ color: colors.textSecondary, fontSize: 12 }}>Symptoms logged</Text>
@@ -220,7 +217,7 @@ export default function PeriodTrackerScreen() {
         </View>
 
         {nextPeriod && (
-          <View style={[styles.prediction, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <View style={[styles.prediction, { backgroundColor: colors.accentSurface, borderColor: colors.accent }]}>
             <Text style={{ color: colors.text, fontWeight: '600' }}>
               Next period estimated: {formatDisplayDate(nextPeriod)}
             </Text>

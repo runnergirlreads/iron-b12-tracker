@@ -31,7 +31,7 @@ export default function MoreMenuScreen() {
           style={[styles.item, { backgroundColor: colors.card, borderColor: colors.border }]}
           onPress={() => navigation.navigate(item.screen)}
         >
-          <View style={[styles.iconWrap, { backgroundColor: colors.primary + '18' }]}>
+          <View style={[styles.iconWrap, { backgroundColor: colors.primarySurface }]}>
             <Ionicons name={item.icon} size={22} color={colors.primary} />
           </View>
           <View style={styles.textWrap}>

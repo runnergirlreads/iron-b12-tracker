@@ -1,5 +1,5 @@
 import { FlowLevel, PeriodEntry, SymptomEntry } from '../types';
-import { daysAgoISO, todayISO } from './dates';
+import { daysAgoISO, eachDateInRange, todayISO } from './dates';
 
 const FLOW_SCORE: Record<FlowLevel, number> = {
   light: 3,
@@ -20,19 +20,6 @@ export interface AlignedSymptomChart {
   severityData: number[];
   periodData: number[];
   hasPeriodOverlay: boolean;
-}
-
-function eachDateInRange(startIso: string, endIso: string): string[] {
-  const dates: string[] = [];
-  const cursor = new Date(startIso + 'T12:00:00');
-  const end = new Date(endIso + 'T12:00:00');
-
-  while (cursor <= end) {
-    dates.push(cursor.toISOString().slice(0, 10));
-    cursor.setDate(cursor.getDate() + 1);
-  }
-
-  return dates;
 }
 
 export function getPeriodFlowByDate(

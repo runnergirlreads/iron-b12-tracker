@@ -43,7 +43,7 @@ export function Chip({
         accessibilityLabel={accessibilityLabel ?? label}
         style={[
           styles.chip,
-          { backgroundColor: colors.primary + '22', borderColor: 'transparent' },
+          { backgroundColor: colors.primarySurface, borderColor: 'transparent' },
           style,
         ]}
       >

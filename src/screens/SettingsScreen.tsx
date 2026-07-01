@@ -176,7 +176,7 @@ export default function SettingsScreen() {
               style={[
                 styles.unitOption,
                 {
-                  backgroundColor: unitSystem === opt.value ? colors.primary + '18' : 'transparent',
+                  backgroundColor: unitSystem === opt.value ? colors.primarySurface : 'transparent',
                   borderColor: unitSystem === opt.value ? colors.primary : colors.border,
                 },
               ]}

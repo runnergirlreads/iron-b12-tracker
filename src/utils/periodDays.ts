@@ -1,20 +1,10 @@
 import { PeriodEntry } from '../types';
+import { eachDateInRange } from './dates';
+
+export { eachDateInRange };
 
 export function getPeriodEndDate(period: PeriodEntry): string {
   return period.endDate ?? period.startDate;
-}
-
-export function eachDateInRange(startIso: string, endIso: string): string[] {
-  const dates: string[] = [];
-  const cursor = new Date(startIso + 'T12:00:00');
-  const end = new Date(endIso + 'T12:00:00');
-
-  while (cursor <= end) {
-    dates.push(cursor.toISOString().slice(0, 10));
-    cursor.setDate(cursor.getDate() + 1);
-  }
-
-  return dates;
 }
 
 export function isDateInPeriod(date: string, period: PeriodEntry): boolean {

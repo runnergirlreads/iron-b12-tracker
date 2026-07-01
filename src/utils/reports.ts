@@ -5,7 +5,7 @@ import {
   MedicationLog,
   SymptomEntry,
 } from '../types';
-import { daysAgoISO, todayISO } from './dates';
+import { daysAgoISO, eachDateInRange, todayISO } from './dates';
 import { getLabRangeStatus } from './labRanges';
 
 export type ReportPeriod = 7 | 30;
@@ -94,11 +94,7 @@ export function computeMedicationAdherence(
 ): MedicationAdherenceItem[] {
   const startDate = daysAgoISO(days - 1);
   const endDate = todayISO();
-
-  const datesInRange: string[] = [];
-  for (let d = new Date(startDate + 'T12:00:00'); d <= new Date(endDate + 'T12:00:00'); d.setDate(d.getDate() + 1)) {
-    datesInRange.push(d.toISOString().slice(0, 10));
-  }
+  const datesInRange = eachDateInRange(startDate, endDate);
 
   return medications.map((med) => {
     const expected = datesInRange.length * med.times.length;

@@ -116,7 +116,7 @@ export default function NotesScreen() {
               {item.tags.length > 0 && (
                 <View style={styles.tagRow}>
                   {item.tags.map((tag) => (
-                    <View key={tag} style={[styles.tag, { backgroundColor: colors.primary + '22' }]}>
+                    <View key={tag} style={[styles.tag, { backgroundColor: colors.primarySurface }]}>
                       <Text style={{ color: colors.primary, fontSize: 12 }}>#{tag}</Text>
                     </View>
                   ))}

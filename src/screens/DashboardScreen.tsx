@@ -64,7 +64,7 @@ export default function DashboardScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
         <Text style={[styles.greeting, { color: colors.text }]}>{greeting}</Text>
-        <Text style={[styles.date, { color: colors.textSecondary }]}>
+        <Text style={[styles.date, { color: colors.accent }]}>
           {formatDisplayDate(todayISO())}
         </Text>
       </View>

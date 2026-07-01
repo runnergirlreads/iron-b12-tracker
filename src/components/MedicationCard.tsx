@@ -4,7 +4,7 @@ import { useTheme } from '../context/ThemeContext';
 import { Medication, TimeSlot } from '../types';
 import { isTimeSlotPast, timeSlotLabel } from '../utils/dates';
 import { Card } from './Card';
-import { spacing, touchTarget, borderRadius, onPrimary } from '../constants/theme';
+import { spacing, touchTarget, borderRadius } from '../constants/theme';
 
 interface MedicationCardProps {
   medication: Medication;
@@ -68,13 +68,13 @@ export function MedicationCard({ medication, takenSlots, onToggle, onEdit, onDel
               style={({ pressed }) => [
                 styles.checkButton,
                 {
-                  backgroundColor: taken ? colors.success : colors.card,
-                  borderColor: taken ? colors.success : colors.border,
+                  backgroundColor: taken ? colors.secondarySurface : colors.card,
+                  borderColor: taken ? colors.secondary : colors.border,
                   opacity: pressed ? 0.85 : 1,
                 },
               ]}
             >
-              <Text style={{ color: taken ? onPrimary : colors.text, fontWeight: '600', fontSize: 14 }}>
+              <Text style={{ color: taken ? colors.secondary : colors.text, fontWeight: '600', fontSize: 14 }}>
                 {taken ? 'Taken' : 'Mark taken'}
               </Text>
             </Pressable>

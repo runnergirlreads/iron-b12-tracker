@@ -28,7 +28,8 @@ function SymptomsNavigator() {
     <SymptomsStack.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: colors.card },
-        headerTintColor: colors.text,
+        headerTintColor: colors.primary,
+        headerTitleStyle: { color: colors.primary, fontWeight: '600' },
         headerShadowVisible: false,
         contentStyle: { backgroundColor: colors.background },
       }}
@@ -45,7 +46,8 @@ function MoreNavigator() {
     <MoreStack.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: colors.card },
-        headerTintColor: colors.text,
+        headerTintColor: colors.primary,
+        headerTitleStyle: { color: colors.primary, fontWeight: '600' },
         headerShadowVisible: false,
         contentStyle: { backgroundColor: colors.background },
       }}
@@ -68,7 +70,8 @@ export default function RootNavigator() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerStyle: { backgroundColor: colors.card },
-        headerTintColor: colors.text,
+        headerTintColor: colors.primary,
+        headerTitleStyle: { color: colors.primary, fontWeight: '600' },
         headerShadowVisible: false,
         tabBarStyle: {
           backgroundColor: colors.card,

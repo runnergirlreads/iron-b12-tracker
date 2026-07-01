@@ -25,6 +25,6 @@ export function getRangeColor(status: RangeStatus, colors: ThemeColors): string 
     case 'warning':
       return colors.warning;
     default:
-      return colors.success;
+      return colors.secondary;
   }
 }
